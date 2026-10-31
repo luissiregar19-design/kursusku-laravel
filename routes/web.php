@@ -3,9 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CourseController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::view('/lifecycle', 'lifecycle')->name('lifecycle');
+Route::view('/readme-git', 'readme-git')->name('readme-git');
+Route::view('/route-controller-blade', 'route-controller-blade')->name('route-controller-blade');
+Route::resource('courses', CourseController::class);
 Route::get('/pendaftaran', function () {
     $courses = [
         1 => ['name' => 'Web Dasar'],
