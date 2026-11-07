@@ -16,7 +16,7 @@
                 <a href="{{ route('enrollments.create') }}" class="btn btn-success">Daftar Kursus</a>
             </div>
             <div class="col-lg-5">
-                <img src="{{ asset('images/hero-kursus.jpg') }}"
+                <img src="{{ asset('images/hero-kursusku.jpg') }}"
                      alt="Ilustrasi kelas KursusKu" class="img-fluid rounded-4">
             </div>
         </div>
