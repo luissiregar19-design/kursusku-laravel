@@ -1,4 +1,130 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-body { background: #f7f8fa; }
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  color: #e2e8f0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(32,178,130,.25), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(99,102,241,.25), transparent 40%),
+    linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+  background-attachment: fixed;
+}
+
 .navbar-brand { font-weight: 800; }
+
+/* Hero beranda */
+.hero-bg { background: transparent; color: #fff; }
+.hero-bg h1 { color: #fff; }
+.hero-bg .hero-sub { color: #cbd5e1; }
+.hero-bg .btn-success {
+  background: #20b282;
+  border: none;
+  border-radius: 50px;
+  padding: .75rem 2rem;
+  box-shadow: 0 8px 20px rgba(32,178,130,.35);
+  transition: transform .2s;
+}
+.hero-bg .btn-success:hover { transform: translateY(-3px); }
+
+/* Judul dan teks */
+main h1, main h2, main h3, main h4, main h5 { color: #fff; }
+main h2 {
+  font-weight: 600;
+  position: relative;
+  padding-bottom: .6rem;
+}
+main h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 4px;
+  border-radius: 4px;
+  background: #20b282;
+}
+.text-secondary, .text-muted, .form-text { color: #94a3b8 !important; }
+
+/* Kartu */
+.card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  color: #cbd5e1;
+}
+.card .card-footer { background: transparent; border-color: rgba(255,255,255,.12); }
+.course-card {
+  border-top: 4px solid #20b282;
+  transition: transform .2s, box-shadow .2s;
+}
+.course-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,.12);
+  box-shadow: 0 12px 24px rgba(0,0,0,.35) !important;
+}
+.course-card small { color: #5dcaa5 !important; font-weight: 500; }
+
+/* Tabel */
+.table {
+  --bs-table-color: #e2e8f0;
+  --bs-table-bg: transparent;
+  --bs-table-border-color: rgba(255,255,255,.12);
+  --bs-table-striped-bg: rgba(255,255,255,.04);
+  --bs-table-hover-bg: rgba(255,255,255,.08);
+  --bs-table-hover-color: #fff;
+}
+.table > :not(caption) > * > * {
+  background-color: transparent;
+  color: #e2e8f0;
+  border-color: rgba(255,255,255,.12);
+}
+.table thead th {
+  color: #5dcaa5;
+  font-weight: 600;
+  border-bottom: 2px solid #20b282;
+}
+.table-hover > tbody > tr:hover > * { background-color: rgba(255,255,255,.08); }
+
+/* Tombol */
+.btn-primary {
+  background: #20b282;
+  border-color: #20b282;
+  color: #fff;
+  border-radius: 50px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.btn-primary:hover { background: #1a9a70; border-color: #1a9a70; }
+.btn-outline-primary   { color: #7dd3fc; border-color: #7dd3fc; }
+.btn-outline-warning   { color: #fcd34d; border-color: #fcd34d; }
+.btn-outline-danger    { color: #fca5a5; border-color: #fca5a5; }
+.btn-outline-secondary { color: #cbd5e1; border-color: #94a3b8; }
+.btn-outline-primary:hover   { background: #7dd3fc; color: #0f172a; }
+.btn-outline-warning:hover   { background: #fcd34d; color: #0f172a; }
+.btn-outline-danger:hover    { background: #fca5a5; color: #0f172a; }
+.btn-outline-secondary:hover { background: #cbd5e1; color: #0f172a; }
+
+/* Form (create dan edit) */
+.form-label { color: #e2e8f0; }
+.form-control, .form-select {
+  background-color: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.2);
+  color: #fff;
+}
+.form-control:focus, .form-select:focus {
+  background-color: rgba(255,255,255,.12);
+  border-color: #20b282;
+  color: #fff;
+  box-shadow: 0 0 0 .2rem rgba(32,178,130,.25);
+}
+.form-control::placeholder { color: #94a3b8; }
+.form-select option { color: #0f172a; }
+
+/* Notifikasi */
+.alert-success {
+  background: rgba(32,178,130,.18);
+  border-color: rgba(32,178,130,.5);
+  color: #bbf7d0;
+}

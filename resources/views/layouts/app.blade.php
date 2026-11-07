@@ -7,8 +7,10 @@
     <title>@yield('title', 'KursusKu')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="@yield('body_class')">
     @include('partials.navbar')
+
+    @yield('hero')
 
     <main class="container py-4">
         @if (session('success'))
