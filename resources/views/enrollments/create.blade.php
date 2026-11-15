@@ -1,62 +1,31 @@
-@extends('layouts.app')
+<h1>Tambah Enrollment</h1>
 
-@section('title', 'Pendaftaran Kursus')
+<form method="POST" action="{{ route('enrollments.store') }}">
+    @csrf
 
-@section('content')
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h3 mb-3">Pendaftaran Kursus</h1>
-                <p class="text-secondary">
-                    Pilih kursus. Jumlah kursi akan dicek tanpa reload halaman.
-                </p>
+    <label for="participant_id">Participant</label>
+    <select name="participant_id" id="participant_id" required>
+        <option value="">-- Pilih Participant --</option>
+        @foreach ($participants as $participant)
+            <option value="{{ $participant->id }}"
+                @selected(old('participant_id') == $participant->id)>
+                {{ $participant->name }} - {{ $participant->email }}
+            </option>
+        @endforeach
+    </select>
+    @error('participant_id') <div>{{ $message }}</div> @enderror
 
-                <form method="POST" action="{{ route('enrollments.preview') }}">
-                    @csrf
+    <label for="course_id">Course</label>
+    <select name="course_id" id="course_id" required>
+        <option value="">-- Pilih Course --</option>
+        @foreach ($courses as $course)
+            <option value="{{ $course->id }}"
+                @selected(old('course_id') == $course->id)>
+                {{ $course->code }} - {{ $course->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('course_id') <div>{{ $message }}</div> @enderror
 
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input type="text" id="name" name="name"
-                               value="{{ old('name') }}" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email"
-                               value="{{ old('email') }}" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="course_id" class="form-label">Pilih Kursus</label>
-                        <select id="course_id" name="course_id" class="form-select" required>
-                            <option value="">-- pilih kursus --</option>
-                            @foreach ($courses as $id => $course)
-                                <option value="{{ $id }}" @selected(old('course_id') == $id)>
-                                    {{ $course['name'] }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div id="availability" class="alert alert-secondary">
-                        Pilih kursus untuk melihat sisa kursi.
-                    </div>
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <button class="btn btn-success" type="submit">Kirim Pendaftaran</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+    <button type="submit">Simpan Enrollment</button>
+</form>
