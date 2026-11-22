@@ -9,11 +9,31 @@ use App\Http\Requests\UpdateCourseRequest;
 
 class CourseController extends Controller
 {
-    public function index()
-    {
-        $courses = Course::latest()->get();
-        return view('courses.index', compact('courses'));
+   public function index(Request $request)
+{
+    $search = trim((string) $request->query('q'));
+    $status = trim((string) $request->query('status'));
+    $allowed = ['open', 'closed', 'draft'];
+
+    $courses = Course::query()
+        ->when($search !== '', function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('code', 'like', "%{$search}%")
+                  ->orWhere('name', 'like', "%{$search}%");
+            });
+        })
+        ->when(in_array($status, $allowed, true),
+            fn ($query) => $query->where('status', $status))
+        ->orderBy('name')
+        ->paginate(10)
+        ->withQueryString();
+
+    if ($request->boolean('partial')) {
+        return view('courses._results', compact('courses'));
     }
+
+    return view('courses.index', compact('courses', 'search', 'status'));
+}
 
     public function create()
     {
