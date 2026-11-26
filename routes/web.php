@@ -5,7 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\AuthController;
 
+/*
+|--------------------------------------------------------------------------
+| Route lama (tetap publik, navigasi tetap bisa diakses)
+|--------------------------------------------------------------------------
+*/
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::view('/lifecycle', 'lifecycle')->name('lifecycle');
 Route::view('/readme-git', 'readme-git')->name('readme-git');
@@ -13,6 +19,7 @@ Route::view('/route-controller-blade', 'route-controller-blade')->name('route-co
 Route::resource('courses', CourseController::class);
 Route::resource('enrollments', EnrollmentController::class)
     ->only(['index', 'create', 'store']);
+
 Route::get('/pendaftaran', function () {
     $courses = [
         1 => ['name' => 'Web Dasar'],
@@ -46,3 +53,32 @@ Route::get('/courses/{course}/availability', function (int $course) {
 
     return response()->json($availability[$course]);
 })->name('courses.availability');
+
+/*
+|--------------------------------------------------------------------------
+| Auth: hanya untuk tamu (belum login)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+
+    Route::get('/forgot-password', [AuthController::class, 'showForgot'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendReset'])->name('password.email');
+
+    Route::get('/reset-password/{token}', [AuthController::class, 'showReset'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'reset'])->name('password.update');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Auth: hanya untuk user yang sudah login
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
